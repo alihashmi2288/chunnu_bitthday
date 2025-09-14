@@ -288,44 +288,48 @@
     /* Mobile Optimizations */
     @media (max-width: 480px) {
       body { 
-        padding: 0.25rem;
+        padding: 0.15rem;
         height: 100vh;
         overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
       .container { 
-        padding: 0.5rem; 
-        border-radius: 1rem;
+        padding: 0.4rem; 
+        border-radius: 0.8rem;
         max-width: 100%;
+        width: 95%;
         height: auto;
-        max-height: 95vh;
+        max-height: 90vh;
         display: flex;
         flex-direction: column;
         justify-content: center;
       }
-      .title { font-size: 1.3rem; margin-bottom: 0.15rem; }
-      .subtitle { font-size: 0.75rem; margin-bottom: 0.1rem; }
-      .fun-fact { font-size: 0.65rem; margin-bottom: 0.4rem; }
+      .title { font-size: 1.1rem; margin-bottom: 0.1rem; }
+      .subtitle { font-size: 0.65rem; margin-bottom: 0.05rem; }
+      .fun-fact { font-size: 0.55rem; margin-bottom: 0.25rem; }
       .card { 
-        font-size: 1.2rem; 
-        min-height: 40px;
-        border-radius: 0.5rem;
+        font-size: 1rem; 
+        min-height: 35px;
+        border-radius: 0.4rem;
       }
-      .game-board { gap: 0.3rem; margin: 0.3rem 0; }
+      .game-board { gap: 0.25rem; margin: 0.2rem 0; }
       .stats { 
-        padding: 0.3rem;
+        padding: 0.25rem;
         flex-direction: row;
-        gap: 0.8rem;
-        margin: 0.3rem 0;
+        gap: 0.6rem;
+        margin: 0.2rem 0;
       }
-      .stat-item { flex-direction: column; gap: 0.1rem; }
-      .stat-label { font-size: 0.7rem; }
-      .stat-value { font-size: 0.85rem; }
+      .stat-item { flex-direction: column; gap: 0.05rem; }
+      .stat-label { font-size: 0.6rem; }
+      .stat-value { font-size: 0.75rem; }
       .restart-btn { 
-        padding: 0.4rem 0.8rem; 
-        font-size: 0.75rem;
-        margin-top: 0.15rem;
+        padding: 0.3rem 0.6rem; 
+        font-size: 0.65rem;
+        margin-top: 0.1rem;
       }
-      .credit { font-size: 0.7rem; margin-top: 0.25rem; }
+      .credit { font-size: 0.6rem; margin-top: 0.15rem; }
       .modal-content { 
         padding: 1.5rem;
         border-radius: 1.5rem;
@@ -342,20 +346,20 @@
     }
 
     @media (max-width: 360px) {
-      .container { padding: 0.4rem; }
-      .title { font-size: 1.2rem; margin-bottom: 0.1rem; }
-      .subtitle { font-size: 0.7rem; margin-bottom: 0.05rem; }
-      .fun-fact { font-size: 0.6rem; margin-bottom: 0.3rem; }
+      .container { padding: 0.3rem; width: 98%; }
+      .title { font-size: 1rem; margin-bottom: 0.05rem; }
+      .subtitle { font-size: 0.6rem; margin-bottom: 0.03rem; }
+      .fun-fact { font-size: 0.5rem; margin-bottom: 0.2rem; }
       .card { 
-        font-size: 1rem; 
-        min-height: 35px;
+        font-size: 0.9rem; 
+        min-height: 30px;
       }
-      .game-board { gap: 0.25rem; margin: 0.25rem 0; }
-      .stats { padding: 0.25rem; margin: 0.25rem 0; }
-      .stat-label { font-size: 0.65rem; }
-      .stat-value { font-size: 0.8rem; }
-      .restart-btn { padding: 0.3rem 0.6rem; font-size: 0.7rem; margin-top: 0.1rem; }
-      .credit { font-size: 0.65rem; margin-top: 0.2rem; }
+      .game-board { gap: 0.2rem; margin: 0.15rem 0; }
+      .stats { padding: 0.2rem; margin: 0.15rem 0; gap: 0.5rem; }
+      .stat-label { font-size: 0.55rem; }
+      .stat-value { font-size: 0.7rem; }
+      .restart-btn { padding: 0.25rem 0.5rem; font-size: 0.6rem; margin-top: 0.05rem; }
+      .credit { font-size: 0.55rem; margin-top: 0.1rem; }
       .modal-title { font-size: 1.6rem; }
       .profile-img { 
         width: 130px; 
