@@ -187,6 +187,13 @@
       max-width: 400px;
       width: 100%;
       position: relative;
+      animation: modalBounce 0.6s ease-out;
+    }
+
+    @keyframes modalBounce {
+      0% { transform: scale(0.3) rotate(-10deg); opacity: 0; }
+      50% { transform: scale(1.05) rotate(2deg); }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
     }
 
     .modal-title {
@@ -195,6 +202,12 @@
       font-weight: 700;
       margin-bottom: 1rem;
       text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+      animation: titleGlow 2s ease-in-out infinite;
+    }
+
+    @keyframes titleGlow {
+      0%, 100% { text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+      50% { text-shadow: 2px 2px 20px rgba(255,255,255,0.8), 0 0 30px rgba(255,255,255,0.6); }
     }
 
     .profile-img {
@@ -204,6 +217,12 @@
       border: 4px solid rgba(255,255,255,0.8);
       margin: 1rem auto;
       object-fit: cover;
+      animation: profilePulse 3s ease-in-out infinite;
+    }
+
+    @keyframes profilePulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(255,255,255,0.3); }
+      50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(255,255,255,0.6); }
     }
 
     .modal-message {
@@ -222,11 +241,20 @@
       font-weight: 600;
       cursor: pointer;
       margin-top: 1rem;
-      transition: background 0.2s ease;
+      transition: all 0.2s ease;
+      animation: buttonWiggle 1s ease-in-out infinite;
+    }
+
+    @keyframes buttonWiggle {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(1deg); }
+      75% { transform: rotate(-1deg); }
     }
 
     .play-again-btn:hover {
       background: rgba(255,255,255,0.3);
+      transform: translateY(-2px) scale(1.05);
+      animation-play-state: paused;
     }
 
     /* Mobile Optimizations */
@@ -280,6 +308,30 @@
         width: 80px; 
         height: 80px; 
       }
+    }
+
+    .confetti {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: #ffd700;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    @keyframes confettiFall {
+      0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+    }
+
+    .celebration {
+      animation: celebrate 0.6s ease-out;
+    }
+
+    @keyframes celebrate {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
     }
 
     /* Landscape */
@@ -389,6 +441,7 @@
         
         if (matchedPairs === 6) {
           setTimeout(() => {
+            createCelebration();
             playCelebrationMusic();
             modal.classList.remove('hidden');
           }, 500);
@@ -424,12 +477,43 @@
       });
     }
 
+    function createCelebration() {
+      // Add celebration class to container
+      document.querySelector('.container').classList.add('celebration');
+      
+      // Create confetti
+      const colors = ['#ffd700', '#ff6b6b', '#4ecdc4', '#45b7d1', '#f093fb'];
+      for (let i = 0; i < 15; i++) {
+        setTimeout(() => {
+          const confetti = document.createElement('div');
+          confetti.className = 'confetti';
+          confetti.style.left = Math.random() * 100 + '%';
+          confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+          confetti.style.animation = `confettiFall ${2 + Math.random()}s linear forwards`;
+          confetti.style.animationDelay = Math.random() * 0.5 + 's';
+          
+          document.body.appendChild(confetti);
+          setTimeout(() => confetti.remove(), 3000);
+        }, i * 100);
+      }
+      
+      // Remove celebration class after animation
+      setTimeout(() => {
+        document.querySelector('.container').classList.remove('celebration');
+      }, 600);
+    }
+
     function playCelebrationMusic() {
       try {
         const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        // Extended Happy Birthday melody
         const melody = [
-          {freq: 261.63, duration: 0.4}, {freq: 293.66, duration: 0.4}, 
-          {freq: 329.63, duration: 0.4}, {freq: 349.23, duration: 0.6}
+          {freq: 261.63, duration: 0.5}, {freq: 261.63, duration: 0.3}, 
+          {freq: 293.66, duration: 0.7}, {freq: 261.63, duration: 0.7}, 
+          {freq: 349.23, duration: 0.7}, {freq: 329.63, duration: 1.0},
+          {freq: 261.63, duration: 0.5}, {freq: 261.63, duration: 0.3},
+          {freq: 293.66, duration: 0.7}, {freq: 261.63, duration: 0.7},
+          {freq: 392.00, duration: 0.7}, {freq: 349.23, duration: 1.0}
         ];
         
         let time = ctx.currentTime;
@@ -440,7 +524,8 @@
           osc.frequency.value = note.freq;
           osc.type = 'sine';
           
-          gain.gain.setValueAtTime(0.3, time);
+          gain.gain.setValueAtTime(0, time);
+          gain.gain.linearRampToValueAtTime(0.3, time + 0.05);
           gain.gain.exponentialRampToValueAtTime(0.01, time + note.duration);
           
           osc.connect(gain);
@@ -448,10 +533,10 @@
           osc.start(time);
           osc.stop(time + note.duration);
           
-          time += note.duration;
+          time += note.duration + 0.1;
         });
         
-        setTimeout(() => ctx.close(), 3000);
+        setTimeout(() => ctx.close(), 8000);
       } catch (e) {
         console.log('Audio not supported');
       }
